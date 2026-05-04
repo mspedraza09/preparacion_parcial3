@@ -75,5 +75,56 @@ class LinkedList:
             otro.next = next_node
             current = next_node
             
+    def reverseKGroup(head, k):
+        dummy = Node(0)
+        dummy.next = head
+        group_prev = dummy
 
+        while True:
+            # 1. verificar si hay k nodos
+            kth = group_prev
+            for _ in range(k):
+                kth = kth.next
+                if not kth:
+                    return dummy.next
+            
+            group_next = kth.next
 
+            # 2. invertir grupo
+            prev = group_next
+            current = group_prev.next
+
+            for _ in range(k):
+                next_node = current.next
+                current.next = prev
+                prev = current
+                current = next_node
+
+            # 3. reconectar
+            temp = group_prev.next
+            group_prev.next = prev
+            group_prev = temp
+
+    def Josephus_multiple4(self, k,m):
+        current = self.head
+        i = 1
+        while current != current.next:
+            while i < m:
+                current = current.next 
+                i += 1
+            if current.next.data % k == 0:
+                    multiplo_k = current.next
+                    current.next = multiplo_k.next
+                    current = current.next
+                    i = 1
+                    if multiplo_k == self.head:
+                        self.head = multiplo_k.next
+            else:
+                    next_node = current.next
+                    current.next = next_node.next
+                    i = 1
+                if next_node == self.head:
+                    self.head = next_node.next
+            
+            
+            
